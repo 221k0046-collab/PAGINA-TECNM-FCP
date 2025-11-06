@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ResidenciasPro - Portal Interactivo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* small custom overrides matching tu diseño */
+    .hero-section {
+      background: linear-gradient(to right, rgba(30, 58, 138, 0.9), rgba(88, 28, 135, 0.7)),
+        url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-hover {
+      transition: all .25s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 30px rgba(2, 6, 23, 0.12);
+    }
+
+    .student-img-hover {
+      transition: transform .35s ease;
+    }
+
+    .student-card:hover .student-img-hover {
+      transform: scale(1.06);
+    }
+
+    .overlay-hover {
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .student-card:hover .overlay-hover {
+      opacity: 1;
+    }
+
+    /* modal */
+    .modal-backdrop {
+      background: rgba(0, 0, 0, 0.45);
+    }
+  </style>
+</head>
+
+
+
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+
+
+
+  <!-- NAV -->
+
+  <nav class="bg-white shadow sticky top-0 z-50">
+
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+
+        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path
+            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+        </svg>
+
+        <div>
+
+          <h1 class="text-lg font-bold text-gray-800">TecNM (ITSFCP)</h1>
+
+          <p class="text-xs text-gray-500">Sistema de Gestión Integral</p>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="flex gap-2 items-center">
+
+        <button onclick="showSection('inicio')" id="btn-inicio"
+          class="px-4 py-2 rounded-lg font-semibold bg-blue-600 text-white">Inicio</button>
+
+        <button onclick="showSection('estudiantes')" id="btn-estudiantes"
+          class="px-4 py-2 rounded-lg font-semibold text-gray-600">Estudiantes</button>
+
+        <button onclick="showSection('empresas')" id="btn-empresas"
+          class="px-4 py-2 rounded-lg font-semibold text-gray-600">Empresas</button>
+
+        <button onclick="showSection('proyectos')" id="btn-proyectos"
+          class="px-4 py-2 rounded-lg font-semibold text-gray-600">Proyectos</button>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+
+
+
+  <main class="max-w-7xl mx-auto px-6 py-8">
+
+
+
+    <!-- INICIO -->
+
+    <section id="inicio" class="section">
+
+      <!-- hero -->
+
+      <div class="hero-section relative h-72 rounded-2xl overflow-hidden shadow-2xl mb-8">
+
+        <div class="absolute inset-0 flex items-center">
+
+          <div class="max-w-3xl mx-auto text-center px-6">
+
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Portal de Residencias Profesionales</h1>
+
+            <p class="text-lg text-gray-200 mb-6">Conectando talento estudiantil con empresas líderes para construir el
+              futuro</p>
+
+            <div class="flex gap-4 justify-center">
+
+              <button onclick="showSection('estudiantes')"
+                class="bg-white text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">Ver
+                Estudiantes →</button>
+
+              <button onclick="showSection('empresas')"
+                class="bg-transparent border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white/10 transition">Empresas
+                Participantes</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- stats -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+
+
+        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+
+          <div class="bg-blue-500 w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+            <!-- Icono relleno: usuario -->
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" />
+              <path d="M4 20c0-4 4-6 8-6s8 2 8 6v1H4v-1z" />
+            </svg>
+          </div>
+
+          <h3 id="stat-estudiantes" class="text-3xl font-bold text-gray-800 mb-1">—</h3>
+
+          <p class="text-gray-600">Estudiantes Activos</p>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+
+          <div class="bg-green-500 w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+            <!-- Icono relleno: edificio -->
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 21h18v-2H3v2zM5 3h14v14H5V3zm2 2v2h2V5H7zm4 0v2h2V5h-2zm4 0v2h2V5h-2z" />
+            </svg>
+          </div>
+
+          <h3 id="stat-empresas" class="text-3xl font-bold text-gray-800 mb-1">—</h3>
+
+          <p class="text-gray-600">Empresas Vinculadas</p>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+
+          <div class="bg-purple-500 w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+            <!-- Icono relleno: libro/proyecto -->
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 2H6c-1.1 0-2 .9-2 2v16l7-3 7 3V4c0-1.1-.9-2-2-2z" />
+            </svg>
+          </div>
+
+          <h3 id="stat-proyectos" class="text-3xl font-bold text-gray-800 mb-1">—</h3>
+
+          <p class="text-gray-600">Proyectos en Curso</p>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+
+          <div class="bg-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+            <!-- Icono relleno: estrella -->
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+            </svg>
+          </div>
+
+          <h3 id="stat-exito" class="text-3xl font-bold text-gray-800 mb-1">96%</h3>
+
+          <p class="text-gray-600">Tasa de Éxito</p>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <!-- destacados -->
+
+      <div class="bg-white rounded-2xl shadow-xl p-6 mb-8">
+
+        <div class="flex items-center justify-between mb-4">
+
+          <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-3"><svg class="w-6 h-6 text-blue-600"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            </svg> Estudiantes Destacados</h2>
+
+          <button onclick="showSection('estudiantes')" class="text-blue-600 font-semibold">Ver todos →</button>
+
+        </div>
+
+        <div id="destacados-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+          <!-- dinamico -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- imagenes / banners -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+        <div class="relative h-56 rounded-2xl overflow-hidden shadow-xl">
+
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1000&h=600&fit=crop"
+            class="w-full h-full object-cover" alt="colaboracion">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+
+            <div class="text-white">
+
+              <h3 class="text-2xl font-bold mb-1">Colaboración Empresarial</h3>
+
+              <p class="text-gray-200">Proyectos reales con impacto significativo</p>
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+        <div class="relative h-56 rounded-2xl overflow-hidden shadow-xl">
+
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1000&h=600&fit=crop"
+            class="w-full h-full object-cover" alt="innovacion">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+
+            <div class="text-white">
+
+              <h3 class="text-2xl font-bold mb-1">Innovación y Tecnología</h3>
+
+              <p class="text-gray-200">Desarrollo de soluciones empresariales</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ESTUDIANTES -->
+
+    <section id="estudiantes" class="section hidden">
+
+      <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+
+        <div class="flex items-center justify-between mb-4">
+
+          <h2 class="text-2xl font-bold text-gray-800">Directorio de Estudiantes</h2>
+
+          <div class="flex gap-2">
+
+            <input id="search-input" type="text" placeholder="Buscar por nombre, carrera o empresa..."
+              class="px-4 py-2 rounded-lg border border-gray-200 w-72" oninput="renderStudents()">
+
+            <select id="filter-carrera" class="px-3 py-2 rounded-lg border border-gray-200" onchange="renderStudents()">
+
+              <option value="">Todas las carreras</option>
+
+
+
+            </select>
+
+            <select id="filter-empresa" class="px-3 py-2 rounded-lg border border-gray-200" onchange="renderStudents()">
+
+              <option value="">Todas las empresas</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+
+        <div id="students-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- tarjetas generadas -->
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- EMPRESAS -->
+
+    <section id="empresas" class="section hidden">
+
+      <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+
+        <div class="flex items-center justify-between mb-4">
+
+          <h2 class="text-2xl font-bold text-gray-800">Empresas Participantes</h2>
+
+          <div>
+
+            <input id="search-empresa" type="text" placeholder="Buscar empresa..."
+              class="px-4 py-2 rounded-lg border border-gray-200" oninput="renderCompanies()">
+
+          </div>
+
+        </div>
+
+
+
+
+
+        <div id="companies-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- empresas -->
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- PROYECTOS -->
+
+    <section id="proyectos" class="section hidden">
+
+      <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+
+        <div class="flex items-center justify-between mb-4">
+
+          <h2 class="text-2xl font-bold text-gray-800">Proyectos</h2>
+
+          <div>
+
+            <input id="search-proyecto" oninput="renderProjects()" type="text" placeholder="Buscar proyecto..."
+              class="px-4 py-2 rounded-lg border border-gray-200">
+
+          </div>
+
+        </div>
+
+
+
+        <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- proyectos -->
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+  </main>
+
+
+
+
+
+  <!-- MODAL -->
+
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-60">
+
+    <div class="modal-backdrop absolute inset-0"></div>
+
+    <div class="relative bg-white rounded-2xl max-w-3xl w-full mx-4 p-6 z-50 shadow-2xl">
+
+      <button onclick="closeModal()" class="absolute right-4 top-4 text-gray-500 
+
+hover:text-gray-800">✕</button>
+
+      <div id="modal-content"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+
+
+
+
+    const data = {
+
+      asesores: [
+
+        { id: 1, nombre: "Carlos", apellido_P: "Méndez", apellido_M: "Ruiz" },
+
+        { id: 2, nombre: "Laura", apellido_P: "González", apellido_M: "Pérez" },
+
+        { id: 3, nombre: "Jorge", apellido_P: "Ramírez", apellido_M: "Torres" },
+
+        { id: 4, nombre: "Daniela", apellido_P: "Herrera", apellido_M: "López" },
+
+        { id: 5, nombre: "Miguel", apellido_P: "Sánchez", apellido_M: "Aguilar" },
+
+        { id: 6, nombre: "Andrea", apellido_P: "Flores", apellido_M: "Medina" },
+
+        { id: 7, nombre: "José", apellido_P: "Pineda", apellido_M: "Cruz" },
+
+        { id: 8, nombre: "Fernanda", apellido_P: "Vázquez", apellido_M: "Romero" },
+
+        { id: 9, nombre: "Alejandro", apellido_P: "Ortega", apellido_M: "Salazar" },
+
+        { id: 10, nombre: "Valeria", apellido_P: "Morales", apellido_M: "Díaz" },
+
+        { id: 11, nombre: "Enrique", apellido_P: "Castro", apellido_M: "Bautista" },
+
+
+
+        { id: 12, nombre: "Sofía", apellido_P: "Navarro", apellido_M: "Reyes" },
+
+        { id: 13, nombre: "Luis", apellido_P: "Domínguez", apellido_M: "Chávez" },
+
+        { id: 14, nombre: "Patricia", apellido_P: "Hernández", apellido_M: "Fuentes" },
+
+        { id: 15, nombre: "Raúl", apellido_P: "Cabrera", apellido_M: "Jiménez" },
+
+        { id: 16, nombre: "Gabriela", apellido_P: "Ríos", apellido_M: "Castillo" },
+
+        { id: 17, nombre: "Eduardo", apellido_P: "Pérez", apellido_M: "Suárez" },
+
+        { id: 18, nombre: "Mariana", apellido_P: "Campos", apellido_M: "Vega" },
+
+        { id: 19, nombre: "Ricardo", apellido_P: "Torres", apellido_M: "León" },
+
+        { id: 20, nombre: "Alejandra", apellido_P: "Jiménez", apellido_M: "Morales" },
+
+        { id: 21, nombre: "Francisco", apellido_P: "Aguilar", apellido_M: "Díaz" },
+
+        { id: 22, nombre: "Karla", apellido_P: "Soto", apellido_M: "Martínez" },
+
+        { id: 23, nombre: "Manuel", apellido_P: "Reyes", apellido_M: "Vargas" },
+
+        { id: 24, nombre: "Diana", apellido_P: "Ortega", apellido_M: "Mendoza" },
+
+        { id: 25, nombre: "Roberto", apellido_P: "Guzmán", apellido_M: "Herrera" },
+
+        { id: 26, nombre: "Paola", apellido_P: "Cordero", apellido_M: "Sánchez" },
+
+        { id: 27, nombre: "Sergio", apellido_P: "Vega", apellido_M: "Núñez" },
+
+        { id: 28, nombre: "Claudia", apellido_P: "Méndez", apellido_M: "Pacheco" },
+
+        { id: 29, nombre: "Arturo", apellido_P: "Ramírez", apellido_M: "López" }
+
+      ],
+
+
+
+      empresas: [
+
+        { id: 1, nombre: "Grupo Industrial del Sureste", giro: "Manufactura", tamaño: "Grande", correo: "contacto@gis.mx", rfc: "GIS230101AB1", tipo: 1 },
+
+        { id: 2, nombre: "Soluciones Tecnológicas del Caribe", giro: "TI", tamaño: "Mediana", correo: "soporte@stc.com.mx", rfc: "STC230102BC2", tipo: 2 },
+
+        { id: 3, nombre: "Constructora Maya", giro: "Construcción", tamaño: "Grande", correo: "proyectos@cmaya.com", rfc: "CMC230103CD3", tipo: 3 },
+
+
+
+        { id: 4, nombre: "Agroindustrias Peninsulares", giro: "Agroindustria", tamaño: "Mediana", correo: "agro@aipeninsular.mx", rfc: "AIP230104DE4", tipo: 4 },
+
+        { id: 5, nombre: "Servicios Administrativos Integrales", giro: "Servicios", tamaño: "Pequeña", correo: "info@sai.com.mx", rfc: "SAI230105EF5", tipo: 5 },
+
+        { id: 6, nombre: "Hotel Riviera Azul", giro: "Turismo", tamaño: "Mediana", correo: "reservaciones@rivazul.com", rfc: "HRA230106FG6", tipo: 6 },
+
+        { id: 7, nombre: "Comercializadora Yucatán", giro: "Comercio", tamaño: "Pequeña", correo: "ventas@comyuc.mx", rfc: "COY230107GH7", tipo: 7 },
+
+        { id: 8, nombre: "Energía Renovable del Golfo", giro: "Energía", tamaño: "Grande", correo: "contacto@erg.mx", rfc: "ERG230108HI8", tipo: 8 },
+
+        { id: 9, nombre: "Textiles del Mayab", giro: "Textil", tamaño: "Mediana", correo: "ventas@textilesmayab.com", rfc: "TDM230109IJ9", tipo: 9 },
+
+        { id: 10, nombre: "Software Creativo MX", giro: "TI", tamaño: "Pequeña", correo: "contacto@scm.mx", rfc: "SCM230110JK1", tipo: 10 },
+
+        { id: 11, nombre: "Transporte del Sureste", giro: "Transporte", tamaño: "Mediana", correo: "logistica@tds.mx", rfc: "TDS230111KL2", tipo: 11 },
+
+        { id: 12, nombre: "Inmobiliaria Peninsular", giro: "Bienes Raíces", tamaño: "Mediana", correo: "ventas@inmopeninsular.com", rfc: "IMP230112LM3", tipo: 12 },
+
+        { id: 13, nombre: "Restaurante La Ceiba", giro: "Alimentos", tamaño: "Pequeña", correo: "reservas@laceiba.com.mx", rfc: "RLC230113MN4", tipo: 13 },
+
+        { id: 14, nombre: "Consultoría Empresarial Integral", giro: "Consultoría", tamaño: "Pequeña", correo: "contacto@cei.com.mx", rfc: "CEI230114NO5", tipo: 14 },
+
+        { id: 15, nombre: "Plásticos del Caribe", giro: "Manufactura", tamaño: "Mediana", correo: "info@plasticaribe.com", rfc: "PDC230115OP6", tipo: 15 },
+
+        { id: 16, nombre: "Editorial del Mayab", giro: "Editorial", tamaño: "Pequeña", correo: "editorial@mayab.com", rfc: "EDM230116PQ7", tipo: 16 },
+
+        { id: 17, nombre: "Hospital San Felipe", giro: "Salud", tamaño: "Grande", correo: "info@hospitalsanfelipe.mx", rfc: "HSF230117QR8", tipo: 17 },
+
+        { id: 18, nombre: "Panificadora Delicias", giro: "Alimentos", tamaño: "Pequeña", correo: "pedidos@panidelicias.com", rfc: "PDL230118RS9", tipo: 18 },
+
+
+
+        { id: 19, nombre: "Seguridad Privada Sureste", giro: "Seguridad", tamaño: "Pequeña", correo: "contacto@sps.mx", rfc: "SPS230119ST1", tipo: 19 },
+
+        { id: 20, nombre: "Autopartes del Golfo", giro: "Automotriz", tamaño: "Mediana", correo: "ventas@autogolfo.mx", rfc: "ADG230120TU2", tipo: 20 },
+
+        { id: 21, nombre: "Telecomunicaciones Avanzadas", giro: "Telecom", tamaño: "Grande", correo: "soporte@telecomavanzadas.com", rfc: "TCA230121UV3", tipo: 21 },
+
+        { id: 22, nombre: "Servicios Contables Peninsulares", giro: "Contabilidad", tamaño: "Pequeña", correo: "info@scpeninsulares.mx", rfc: "SCP230122VW4", tipo: 22 },
+
+        { id: 23, nombre: "Maderas y Derivados del Sureste", giro: "Madera", tamaño: "Mediana", correo: "contacto@maderasureste.com", rfc: "MDS230123WX5", tipo: 23 },
+
+        { id: 24, nombre: "Florería Aroma de Mayo", giro: "Servicios", tamaño: "Pequeña", correo: "ventas@aromademayo.com", rfc: "FAM230124XY6", tipo: 24 },
+
+        { id: 25, nombre: "Centro de Capacitación Integral", giro: "Servicios", tamaño: "Pequeña", correo: "informes@capacitacionintegral.mx", rfc: "CCI230125YZ7", tipo: 25 },
+
+        { id: 26, nombre: "Laboratorios Químicos del Caribe", giro: "Laboratorio", tamaño: "Mediana", correo: "contacto@labquimcaribe.com", rfc: "LQC230126ZA8", tipo: 26 },
+
+        { id: 27, nombre: "Ganadería Santa Cruz", giro: "Agropecuario", tamaño: "Grande", correo: "ganaderia.sc@correo.com", rfc: "GSC230127AB9", tipo: 27 },
+
+        { id: 28, nombre: "Vidrios y Aluminios Peninsulares", giro: "Manufactura", tamaño: "Mediana", correo: "ventas@vidriosaluminios.com", rfc: "VAP230128BC1", tipo: 28 },
+
+        { id: 29, nombre: "Cine Centro Maya", giro: "Entretenimiento", tamaño: "Pequeña", correo: "info@cinecentromaya.mx", rfc: "CCM230129CD2", tipo: 29 },
+
+        { id: 30, nombre: "Servicios de Limpieza Integral", giro: "Servicios", tamaño: "Pequeña", correo: "contacto@limpiezaintegral.com", rfc: "SLI230130DE3", tipo: 30 }
+
+      ],
+
+
+
+
+
+      proyectos: [
+
+        { id: 1, nombre: "Diseño de un Sistema de Control de Inventarios para la Línea de Producción", inicio: "2026-08-20", fin: "2026-12-20", metodologia: "Ingeniería Administrativa (Diagnóstico, Diseño, Implementación)", estado: "En Proceso", entregables: [1], detalleId: 1 },
+
+        { id: 2, nombre: "Implementación de un Módulo de Pago Online en Plataforma Web", inicio: "2026-08-20", fin: "2026-12-20", metodologia: "Ágil (SCRUM) con enfoque en desarrollo web seguro", estado: "En Proceso", entregables: [2], detalleId: 2 },
+
+        { id: 3, nombre: "Desarrollo de una Interfaz de Monitoreo en Tiempo Real para Maquinaria Pesada", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Ingeniería de Software - sistemas embebidos", estado: "En Proceso", entregables: [3], detalleId: 3 },
+
+        { id: 4, nombre: "Optimización de la Cadena de Suministro para Materia Prima Agrícola", inicio: "2026-08-18", fin: "2026-12-18", metodologia: "Ingeniería de Gestión", estado: "En Proceso", entregables: [4], detalleId: 4 },
+
+        { id: 5, nombre: "Creación de un Modelo de Gestión de Voluntariado", inicio: "2026-08-22", fin: "2026-12-22", metodologia: "Desarrollo Comunitario", estado: "En Proceso", entregables: [5], detalleId: 5 },
+
+        { id: 6, nombre: "Elaboración de Indicadores de Desempeño (KPI) para Hotel", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Ingeniería de Gestión", estado: "En Proceso", entregables: [6], detalleId: 6 },
+
+        { id: 7, nombre: "Estudio de Viabilidad - Almacén Vertical Automatizado", inicio: "2026-08-19", fin: "2026-12-19", metodologia: "Ingeniería Industrial", estado: "En Proceso", entregables: [7], detalleId: 7 },
+
+        { id: 8, nombre: "Estandarización de Procesos de Mantenimiento Preventivo y Correctivo", inicio: "2026-08-16", fin: "2026-12-16", metodologia: "Ingeniería Industrial", estado: "En Proceso", entregables: [8], detalleId: 8 },
+
+        { id: 9, nombre: "Diseño y Aplicación de un Sistema de Gestión de Calidad (ISO 9001)", inicio: "2026-08-21", fin: "2026-12-21", metodologia: "Ingeniería Industrial", estado: "En Proceso", entregables: [9], detalleId: 9 },
+
+        { id: 10, nombre: "Auditoría de Seguridad y Plan de Recuperación de Desastres (DRP)", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Ciberseguridad", estado: "En Proceso", entregables: [10], detalleId: 10 },
+
+
+
+        { id: 11, nombre: "Rediseño de la Ruta de Distribución", inicio: "2026-08-17", fin: "2026-12-17", metodologia: "Ingeniería en Administración", estado: "En Proceso", entregables: [11], detalleId: 11 },
+
+        { id: 12, nombre: "Desarrollo de Aplicación Móvil para Gestión de Citas", inicio: "2026-08-20", fin: "2026-12-20", metodologia: "Desarrollo Móvil", estado: "En Proceso", entregables: [12], detalleId: 12 },
+
+        { id: 13, nombre: "Sistema de Monitoreo de Productividad para Equipos Remotos", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Sistemas de Información", estado: "En Proceso", entregables: [3], detalleId: 13 },
+
+        { id: 14, nombre: "Análisis de Rentabilidad y Presupuesto Maestro", inicio: "2026-08-22", fin: "2026-12-22", metodologia: "Finanzas Corporativas", estado: "En Proceso", entregables: [14], detalleId: 14 },
+
+        { id: 15, nombre: "Evaluación de Impacto Socioeconómico del Centro de Producción", inicio: "2026-08-18", fin: "2026-12-18", metodologia: "Investigación Social", estado: "En Proceso", entregables: [15], detalleId: 15 },
+
+        { id: 16, nombre: "App Móvil para Monitoreo Remoto de Cultivos", inicio: "2026-08-16", fin: "2026-12-16", metodologia: "Innovación Agrícola", estado: "En Proceso", entregables: [16], detalleId: 16 },
+
+        { id: 17, nombre: "Manual de Políticas y Procedimientos para Insumos Médicos", inicio: "2026-08-19", fin: "2026-12-19", metodologia: "Administración de Insumos", estado: "En Proceso", entregables: [17], detalleId: 17 },
+
+        { id: 18, nombre: "Optimización de Procesos Aduanales", inicio: "2026-08-21", fin: "2026-12-21", metodologia: "Comercio Exterior", estado: "En Proceso", entregables: [18], detalleId: 18 },
+
+        { id: 19, nombre: "Dashboard Interactivo para Trazabilidad de Productos", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "BI & Visualización", estado: "En Proceso", entregables: [19], detalleId: 19 },
+
+        { id: 20, nombre: "Estrategia de Marketing Digital para Proyectos Comunitarios", inicio: "2026-08-17", fin: "2026-12-17", metodologia: "Marketing Digital", estado: "En Proceso", entregables: [20], detalleId: 20 },
+
+        { id: 21, nombre: "Implementación de un Sistema ERP", inicio: "2026-08-20", fin: "2026-12-20", metodologia: "ERP", estado: "En Proceso", entregables: [21], detalleId: 21 },
+
+
+
+        { id: 22, nombre: "Estudio de Tiempos y Movimientos", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Ingeniería Industrial", estado: "En Proceso", entregables: [22], detalleId: 22 },
+
+        { id: 23, nombre: "Propuesta de Reingeniería de Procesos Administrativos", inicio: "2026-08-18", fin: "2026-12-18", metodologia: "Reingeniería", estado: "En Proceso", entregables: [23], detalleId: 23 },
+
+        { id: 24, nombre: "Análisis de Riesgos Operacionales y Plan de Contingencia Eólico", inicio: "2026-08-22", fin: "2026-12-22", metodologia: "Riesgos", estado: "En Proceso", entregables: [24], detalleId: 24 },
+
+        { id: 25, nombre: "Migración de Base de Datos Legacy a Cloud Native", inicio: "2026-08-16", fin: "2026-12-16", metodologia: "Cloud Migration", estado: "En Proceso", entregables: [25], detalleId: 25 },
+
+        { id: 26, nombre: "Algoritmo para Detección de Transacciones Fraudulentas", inicio: "2026-08-19", fin: "2026-12-19", metodologia: "Data Science", estado: "En Proceso", entregables: [26], detalleId: 26 },
+
+        { id: 27, nombre: "Sistema de Evaluación de Desempeño 360 Grados", inicio: "2026-08-21", fin: "2026-12-21", metodologia: "RRHH", estado: "En Proceso", entregables: [27], detalleId: 27 },
+
+        { id: 28, nombre: "Taller de Emprendimiento Social", inicio: "2026-08-15", fin: "2026-12-15", metodologia: "Capacitación", estado: "En Proceso", entregables: [28], detalleId: 28 },
+
+        { id: 29, nombre: "Evaluación de la Rentabilidad del Cine por Tipo de Película y Horario", inicio: "2026-08-17", fin: "2026-12-17", metodologia: "Análisis Comercial", estado: "En Proceso", entregables: [29], detalleId: 29 },
+
+        { id: 30, nombre: "Manual de Buenas Prácticas para la Gestión de Residuos Sólidos", inicio: "2026-08-20", fin: "2026-12-20", metodologia: "Medio Ambiente", estado: "En Proceso", entregables: [30], detalleId: 30 }
+
+      ],
+
+
+
+      entregables: [
+
+        { id: 1, items: ["Documento de Diseño", "Manual de Usuario", "Reporte Final"] },
+
+        { id: 2, items: ["Código Fuente", "Manual Técnico", "Documento de Pruebas"] },
+
+
+
+        { id: 3, items: ["Código Fuente", "Dashboard Operativo", "Manual de Configuración"] },
+
+        { id: 4, items: ["Reporte de Optimización Logística", "Guía de Implementación"] },
+
+        { id: 5, items: ["Manual de Gestión de Voluntariado", "Diagramas de Proceso"] },
+
+        { id: 6, items: ["Dashboard de KPIs", "Manual de Uso de Indicadores"] },
+
+        { id: 7, items: ["Estudio de Viabilidad", "Proyecciones Financieras"] },
+
+        { id: 8, items: ["Manuales de MP y MC", "Matriz de Criticidad"] },
+
+        { id: 9, items: ["Manual del SGC", "Mapa de Procesos"] },
+
+        { id: 10, items: ["Plan BCP/DRP Final", "Reporte de Vulnerabilidades"] },
+
+        { id: 11, items: ["Guía de Ruteo y Distribución", "Simulación de Rutas"] },
+
+        { id: 12, items: ["Código Fuente de la App", "Manual de Usuario", "Documentación Técnica"] }
+
+        // ... hasta 30 
+
+      ],
+
+
+
+      estudiantes: [
+
+        { matricula: "221k0012", nombre: "Jason Harley Angulo", direccion: "6206 Shelley Place", semestre: 9, telefono: "(983) 7993881", empresaId: 1, proyectoId: 1, carrera: "Ingeniería en Sistemas Computacionales", promedio: 95.67, correo_institucional: "221k0012@itscarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0013", nombre: "Martin Adrian Ayala", direccion: "22467 Kipling Crossing", semestre: 9, telefono: "(983) 6238786", empresaId: 2, proyectoId: 2, carrera: "Ingeniería en Gestión Empresarial", promedio: 90.00, correo_institucional: "221k0013@itscarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0014", nombre: "Zeus Cach", direccion: "55 Sugar Way", semestre: 9, telefono: "(983) 7755917", empresaId: 3, proyectoId: 3, carrera: "Ingeniería en Sistemas Computacionales", promedio: 81.63, correo_institucional: "221k0014@itscarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0015", nombre: "Darwin Canche", direccion: "93687 Lindbergh Terrace", semestre: 9, telefono: "(983) 8094714", empresaId: 4, proyectoId: 4, carrera: "Ingeniería en Gestión Empresarial", promedio: 81.42, correo_institucional: "221k0015@itscarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0016", nombre: "Alan Yahir Chan", direccion: "203 Riverside Way", semestre: 9, telefono: "(983) 3342798", empresaId: 5, proyectoId: 5, carrera: "Ingeniería en Desarrollo Comunitario", promedio: 80.71, correo_institucional: "221k0016@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0017", nombre: "Angel Fernando Chi", direccion: "51 Westridge Crossing", semestre: 9, telefono: "(983) 2031284", empresaId: 6, proyectoId: 6, carrera: "Ingeniería en Gestión Empresarial", promedio: 96.66, correo_institucional: "221k0017@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0018", nombre: "Marco Emilio Che", direccion: "09 Maryland Street", semestre: 9, telefono: "(983) 7745080", empresaId: 7, proyectoId: 7, carrera: "Ingeniería en Industrias Alimentarias", promedio: 81.16, correo_institucional: "221k0018@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0019", nombre: "Felipe De Jesus Coba", direccion: "78617 Browning Hill", semestre: 9, telefono: "(983) 2022273", empresaId: 8, proyectoId: 8, carrera: "Ingeniería Industrial", promedio: 93.3, correo_institucional: "221k0019@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0020", nombre: "Victor Manuel De La Cruz", direccion: "60 Monica Hill", semestre: 9, telefono: "(983) 7808461", empresaId: 9, proyectoId: 9, carrera: "Ingeniería Industrial", promedio: 83.79, correo_institucional: "221k0020@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0021", nombre: "Jorge Luis Gutierrez", direccion: "61962 3rd Circle", semestre: 9, telefono: "(983) 1700539", empresaId: 10, proyectoId: 10, carrera: "Ingeniería en Administración", promedio: 96.77, correo_institucional: "221k0021@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0022", nombre: "Fabian Kinil", direccion: "41 School Lane", semestre: 9, telefono: "(983) 9310232", empresaId: 11, proyectoId: 11, carrera: "Ingeniería en Administración", promedio: 88.29, correo_institucional: "221k0022@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0024", nombre: "Julian Alberto Morales", direccion: "54470 Helena Trail", semestre: 9, telefono: "(983) 6319475", empresaId: 12, proyectoId: 12, carrera: "Ingeniería en Sistemas Computacionales", promedio: 97.6, correo_institucional: "221k0024@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+
+
+        { matricula: "221k0025", nombre: "Julio Rodrigo Pat", direccion: "08911 Independence Place", semestre: 9, telefono: "(983) 2639000", empresaId: 13, proyectoId: 13, carrera: "Ingeniería en Sistemas Computacionales", promedio: 84.22, correo_institucional: "221k0025@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0026", nombre: "Efrain Daniel Rivas", direccion: "097 Barnett Circle", semestre: 9, telefono: "(983) 2918368", empresaId: 14, proyectoId: 14, carrera: "Ingeniería en Gestión Empresarial", promedio: 90.6, correo_institucional: "221k0026@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0027", nombre: "Hugo Sanchez", direccion: "4163 High Crossing Street", semestre: 9, telefono: "(983) 5796067", empresaId: 15, proyectoId: 15, carrera: "Ingeniería en Desarrollo Comunitario", promedio: 92.53, correo_institucional: "221k0027@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0028", nombre: "Carlos Alberto Tec", direccion: "29228 Sage Road", semestre: 9, telefono: "(983) 8009235", empresaId: 16, proyectoId: 16, carrera: "Ingeniería en Industrias Alimentarias", promedio: 96.98, correo_institucional: "221k0028@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0029", nombre: "Dioney Fernando Tun", direccion: "05 Center Drive", semestre: 9, telefono: "(983) 1706177", empresaId: 17, proyectoId: 17, carrera: "Ingeniería en Administración", promedio: 81.89, correo_institucional: "221k0029@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0030", nombre: "Johan Andres Velazquez", direccion: "0 Crowley Circle", semestre: 9, telefono: "(983) 6455973", empresaId: 18, proyectoId: 18, carrera: "Ingeniería en Administración", promedio: 85.34, correo_institucional: "221k0030@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0031", nombre: "Santiago Amir Santos", direccion: "56 Jackson Alley", semestre: 9, telefono: "(983) 8596120", empresaId: 19, proyectoId: 19, carrera: "Ingeniería en Sistemas Computacionales", promedio: 83.6, correo_institucional: "221k0031@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0032", nombre: "Frederick Gabriel Aguilar", direccion: "687 Bunting Circle", semestre: 9, telefono: "(983) 9579159", empresaId: 20, proyectoId: 20, carrera: "Ingeniería en Desarrollo Comunitario", promedio: 96.62, correo_institucional: "221k0032@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0034", nombre: "Benito Santiago Balam", direccion: "315 Lyons Parkway", semestre: 9, telefono: "(983) 1956029", empresaId: 21, proyectoId: 21, carrera: "Ingeniería en Gestión Empresarial", promedio: 84.14, correo_institucional: "221k0034@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0036", nombre: "Jairo Amir Cahun", direccion: "2 Tennyson Circle", semestre: 9, telefono: "(983) 7225559", empresaId: 22, proyectoId: 22, carrera: "Ingeniería Industrial", promedio: 91.24, correo_institucional: "221k0036@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0037", nombre: "Jesus Alberto Cen", direccion: "692 Sunbrook Terrace", semestre: 9, telefono: "(983) 9132461", empresaId: 23, proyectoId: 23, carrera: "Ingeniería Industrial", promedio: 83.17, correo_institucional: "221k0037@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0038", nombre: "Saul Alexander Che", direccion: "2116 Cambridge Road", semestre: 9, telefono: "(983) 7788691", empresaId: 24, proyectoId: 24, carrera: "Ingeniería en Administración", promedio: 93.25, correo_institucional: "221k0038@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0039", nombre: "Jose Guillermo Cima", direccion: "9 Mitchell Park", semestre: 9, telefono: "(983) 1365196", empresaId: 25, proyectoId: 25, carrera: "Ingeniería en Sistemas Computacionales", promedio: 84.7, correo_institucional: "221k0039@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0040", nombre: "Alan Alberto Colli", direccion: "339 Merchant Alley", semestre: 9, telefono: "(983) 8403867", empresaId: 26, proyectoId: 26, carrera: "Ingeniería en Sistemas Computacionales", promedio: 84.58, correo_institucional: "221k0040@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0041", nombre: "Einer Anamael Dominguez", direccion: "454 Lake Power Plaza", semestre: 9, telefono: "(983) 9467940", empresaId: 27, proyectoId: 27, carrera: "Ingeniería en Gestión Empresarial", promedio: 95.26, correo_institucional: "221k0041@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0042", nombre: "Luis Mario Ireta", direccion: "104 Alan Rust Plaza", semestre: 9, telefono: "(983) 1818291", empresaId: 28, proyectoId: 28, carrera: "Ingeniería en Desarrollo Comunitario", promedio: 96.52, correo_institucional: "221k0042@itsfelipecarrillopuerto.edu.mx", genero: "M" },
+
+        { matricula: "221k0043", nombre: "Ameli Giselle Ku", direccion: "684 Kate View Plaza", semestre: 9, telefono: "(983) 3698662", empresaId: 29, proyectoId: 29, carrera: "Ingeniería en Innovación Agrícola", promedio: 97.28, correo_institucional: "221k0043@itsfelipecarrillopuerto.edu.mx", genero: "F" },
+
+
+
+        { matricula: "221k0044", nombre: "Adan Adair Moo", direccion: "015 Tuz Goméz Plaza", semestre: 9, telefono: "(983) 6789904", empresaId: 30, proyectoId: 30, carrera: "Ingeniería en Administración", promedio: 96.05, correo_institucional: "221k0044@itsfelipecarrillopuerto.edu.mx", genero: "M" }
+
+      ]
+
+    };
+
+
+
+
+
+    function showSection(id) {
+
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+
+      document.getElementById(id).classList.remove('hidden');
+
+
+
+      // nav active 
+
+      ['inicio', 'estudiantes', 'empresas', 'proyectos'].forEach(name => {
+
+        const btn = document.getElementById('btn-' + name);
+
+        if (btn) btn.classList.remove('bg-blue-600', 'text-white');
+
+      });
+
+      const activeBtn = document.getElementById('btn-' + id);
+
+      if (activeBtn) activeBtn.classList.add('bg-blue-600', 'text-white');
+
+    }
+
+
+
+    // Modal utilities 
+
+    function openModal(html) {
+
+      document.getElementById('modal-content').innerHTML = html;
+
+      document.getElementById('modal').classList.remove('hidden');
+
+      document.getElementById('modal').classList.add('flex');
+
+    }
+
+
+
+    function closeModal() {
+
+      document.getElementById('modal').classList.add('hidden');
+
+      document.getElementById('modal').classList.remove('flex');
+
+    }
+
+
+
+    // Helpers 
+
+    function companyById(id) { return data.empresas.find(e => e.id === id) || null; }
+
+    function projectById(id) { return data.proyectos.find(p => p.id === id) || null; }
+
+
+
+    // === FUNCION AUXILIAR: OBTENER INICIALES (ULTIMAS 2 PALABRAS) ===
+    function getInitials(nombreCompleto) {
+      const partes = (nombreCompleto || '').trim().split(/\s+/).filter(Boolean);
+      if (partes.length >= 2) {
+        // tomar las iniciales de las dos últimas palabras (apellido paterno y materno)
+        return (partes[partes.length - 2][0] + partes[partes.length - 1][0]).toUpperCase();
+      }
+      if (partes.length === 1) return partes[0][0].toUpperCase();
+      return '';
+    }
+
+    // Render Estadísticas y Destacados (Inicio) 
+
+    function renderStatsAndHighlights() {
+
+      document.getElementById('stat-estudiantes').innerText = data.estudiantes.length;
+
+      document.getElementById('stat-empresas').innerText = data.empresas.length;
+
+      document.getElementById('stat-proyectos').innerText = data.proyectos.length;
+
+
+
+      // Destacados: los top 4 por promedio 
+
+      const destacados = [...data.estudiantes].sort((a, b) => b.promedio - a.promedio).slice(0, 4);
+
+      const cont = document.getElementById('destacados-list');
+
+      cont.innerHTML = '';
+
+      destacados.forEach(s => {
+
+        const comp = companyById(s.empresaId);
+
+        // reemplazamos la imagen por un bloque con iniciales y fondo colorido
+        const el = document.createElement('div');
+        el.className = 'student-card group bg-white rounded-xl p-3 shadow card-hover cursor-pointer';
+
+        el.innerHTML = ` 
+          <div class="relative overflow-hidden rounded-lg mb-3"> 
+            <div class="w-full h-40 flex items-center justify-center rounded-lg text-4xl font-bold text-white student-img-hover"
+                 style="background-color: hsl(${Math.random() * 360}, 80%, 50%);">
+              ${getInitials(s.nombre)}
+            </div> 
+            <div class="overlay-hover absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3"> 
+              <button class="bg-white text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">Ver perfil</button> 
+            </div> 
+          </div> 
+          <h3 class="font-bold text-gray-800">${s.nombre}</h3> 
+          <p class="text-sm text-gray-600">${s.carrera}</p> 
+          <p class="text-sm text-blue-600 font-semibold">${comp ? comp.nombre : ''}</p> 
+        `;
+
+        el.onclick = () => showStudentDetails(s.matricula);
+
+        cont.appendChild(el);
+
+      });
+
+    }
+
+
+
+    // RENDER STUDENTS (lista con filtros) 
+
+    function populateFilters() {
+
+      const carreras = Array.from(new Set(data.estudiantes.map(e => e.carrera))).sort();
+
+      const sel = document.getElementById('filter-carrera');
+
+      carreras.forEach(c => {
+
+        const o = document.createElement('option'); o.value = c; o.text = c; sel.appendChild(o);
+
+      });
+
+
+
+
+
+      const sel2 = document.getElementById('filter-empresa');
+
+      data.empresas.forEach(emp => {
+
+        const o = document.createElement('option'); o.value = emp.id; o.text = emp.nombre; sel2.appendChild(o);
+
+      });
+
+    }
+
+
+
+    function renderStudents() {
+
+      const q = (document.getElementById('search-input').value || '').toLowerCase();
+
+      const carrera = document.getElementById('filter-carrera').value;
+
+      const empresaFilter = document.getElementById('filter-empresa').value;
+
+
+
+      const cont = document.getElementById('students-list');
+
+      cont.innerHTML = '';
+
+
+
+      let list = data.estudiantes.slice();
+
+      if (carrera) list = list.filter(s => s.carrera === carrera);
+
+      if (empresaFilter) list = list.filter(s => String(s.empresaId) === String(empresaFilter));
+
+      if (q) {
+
+        list = list.filter(s => (
+
+          s.nombre.toLowerCase().includes(q) ||
+
+          (s.carrera || '').toLowerCase().includes(q) ||
+
+          (companyById(s.empresaId)?.nombre || '').toLowerCase().includes(q)
+
+        ));
+
+      }
+
+
+
+      if (!list.length) {
+
+        cont.innerHTML = '<div class="p-6 text-gray-500">No se encontraron estudiantes</div>';
+
+        return;
+
+      }
+
+
+
+      list.forEach(s => {
+
+        const comp = companyById(s.empresaId);
+
+        const project = projectById(s.proyectoId);
+
+        const el = document.createElement('div');
+
+        el.className = 'bg-white rounded-xl p-4 shadow card-hover cursor-pointer';
+
+        el.innerHTML = ` 
+
+          <div class="flex gap-4 items-center"> 
+
+            <div class="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-semibold border-4 border-white shadow-md"
+                 style="background-color: hsl(${Math.random() * 360}, 80%, 50%);">
+              ${getInitials(s.nombre)}
+            </div> 
+
+            <div class="flex-1"> 
+
+              <div class="flex justify-between"> 
+
+                <div> 
+
+                  <h3 class="text-lg font-bold text-gray-800">${s.nombre}</h3> 
+
+                  <p class="text-sm text-gray-600">${s.carrera} · Sem ${s.semestre}</p> 
+
+                  <p class="text-sm text-blue-600 font-semibold">${comp ? comp.nombre : ''}</p> 
+
+                </div> 
+
+                <div class="text-right"> 
+
+                  <div class="text-sm text-gray-500">Promedio</div> 
+
+
+
+                  <div class="font-bold text-gray-800">${s.promedio}</div> 
+
+                </div> 
+
+              </div> 
+
+              <div class="mt-2 text-sm text-gray-600">${project ? project.nombre : ''}</div> 
+
+            </div> 
+
+          </div> 
+
+        `;
+
+        el.onclick = () => showStudentDetails(s.matricula);
+
+        cont.appendChild(el);
+
+      });
+
+    }
+
+
+
+    function showStudentDetails(matricula) {
+
+      const s = data.estudiantes.find(x => x.matricula === matricula);
+
+      if (!s) return;
+
+      const comp = companyById(s.empresaId);
+
+      const project = projectById(s.proyectoId);
+
+      const asesor = data.asesores[(s.proyectoId - 1) % data.asesores.length]; // ejemplo asociación 
+
+      const html = ` 
+
+        <div class="flex gap-6"> 
+
+          <div class="w-44 h-44 flex items-center justify-center text-white text-5xl font-bold rounded-full mb-3"
+               style="background-color: hsl(${Math.random() * 360}, 80%, 50%);">
+            ${getInitials(s.nombre)}
+          </div> 
+
+          <div class="flex-1"> 
+
+            <h3 class="text-2xl font-bold mb-1">${s.nombre}</h3> 
+
+            <p class="text-gray-700 mb-3">${s.carrera}</p> 
+
+ 
+
+            <h4 class="font-semibold text-gray-800">Empresa</h4> 
+
+            <p class="text-gray-600 mb-2">${comp ? comp.nombre : '—'}</p> 
+
+ 
+
+            <h4 class="font-semibold text-gray-800">Proyecto</h4> 
+
+            <p class="text-gray-600 mb-2">${project ? project.nombre : '—'}</p> 
+
+ 
+
+            <h4 class="font-semibold text-gray-800">Asesor</h4> 
+
+            <p class="text-gray-600 mb-4">${asesor ? asesor.nombre + ' ' + asesor.apellido_P + ' ' + (asesor.apellido_M || '') : '—'}</p> 
+
+ 
+
+            <div class="flex gap-2"> 
+
+              <button class="px-4 py-2 bg-blue-600 text-white rounded-lg" onclick="alert('Descargar expediente: función demo')">Descargar expediente</button> 
+
+              <button class="px-4 py-2 bg-gray-100 rounded-lg" onclick="closeModal()">Cerrar</button> 
+
+            </div> 
+
+          </div> 
+
+        </div> 
+
+
+
+      `;
+
+      openModal(html);
+
+    }
+
+
+
+    // COMPANIES 
+
+    function renderCompanies() {
+
+      const q = (document.getElementById('search-empresa').value || '').toLowerCase();
+
+      const cont = document.getElementById('companies-list');
+
+      cont.innerHTML = '';
+
+      const list = data.empresas.filter(e => (!q || e.nombre.toLowerCase().includes(q)));
+
+      list.forEach(e => {
+
+        const el = document.createElement('div');
+
+        el.className = 'bg-white rounded-xl p-4 shadow card-hover cursor-pointer';
+
+        el.innerHTML = ` 
+
+          <div class="flex gap-4 items-center"> 
+
+            <div class="w-16 h-16 rounded-lg bg-blue-50 flex items-center justify-center"> 
+
+              <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14"/></svg> 
+
+            </div> 
+
+            <div class="flex-1"> 
+
+              <h3 class="font-bold text-gray-800">${e.nombre}</h3> 
+
+              <p class="text-sm text-gray-600">${e.giro} · ${e.tamaño}</p> 
+
+              <p class="text-sm text-blue-600 font-semibold">${e.correo}</p> 
+
+            </div> 
+
+            <div> 
+
+              <button class="px-3 py-1 rounded-lg border" onclick="event.stopPropagation(); showCompany(${e.id})">Ver</button> 
+
+
+
+            </div> 
+
+          </div> 
+
+        `;
+
+        el.onclick = () => showCompany(e.id);
+
+        cont.appendChild(el);
+
+      });
+
+    }
+
+    function showCompany(id) {
+
+      const e = companyById(id);
+
+      if (!e) return;
+
+      const empleados = data.estudiantes.filter(s => s.empresaId === e.id).length;
+
+      const proyectos = data.proyectos.filter(p => data.estudiantes.some(s => s.proyectoId === p.id && s.empresaId === e.id)).map(p => p.nombre);
+
+      const html = ` 
+
+        <div> 
+
+          <h3 class="text-2xl font-bold mb-2">${e.nombre}</h3> 
+
+          <p class="text-gray-600 mb-3">${e.giro} · ${e.tamaño}</p> 
+
+          <div class="grid grid-cols-2 gap-4"> 
+
+            <div><strong>Correo</strong><div class="text-gray-700">${e.correo}</div></div> 
+
+            <div><strong>RFC</strong><div class="text-gray-700">${e.rfc}</div></div> 
+
+            <div><strong>Estudiantes en la empresa</strong><div class="text-gray-700">${empleados}</div></div> 
+
+            <div><strong>Proyectos vinculados</strong><div class="text-gray-700">${proyectos.join(', ') || '—'}</div></div> 
+
+          </div> 
+
+          <div class="mt-4 flex gap-2"> 
+
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg" onclick="alert('Contacto demo: ${e.correo}')">Contactar</button> 
+
+            <button class="px-4 py-2 bg-gray-100 rounded-lg" onclick="closeModal()">Cerrar</button> 
+
+          </div> 
+
+        </div> 
+
+      `;
+
+      openModal(html);
+
+    }
+
+
+
+    // PROYECTOS 
+
+    function renderProjects() {
+
+      const q = (document.getElementById('search-proyecto').value || '').toLowerCase();
+
+      const cont = document.getElementById('projects-list');
+
+      cont.innerHTML = '';
+
+      const list = data.proyectos.filter(p => !q || p.nombre.toLowerCase().includes(q));
+
+      list.forEach(p => {
+
+        const el = document.createElement('div');
+
+        el.className = 'bg-white rounded-xl p-4 shadow card-hover cursor-pointer';
+
+        el.innerHTML = ` 
+
+          <h3 class="font-bold text-gray-800">${p.nombre}</h3> 
+
+          <p class="text-sm text-gray-600">${p.metodologia}</p> 
+
+          <div class="mt-3 flex items-center justify-between"> 
+
+            <div class="text-sm text-gray-500">${p.inicio} → ${p.fin}</div> 
+
+            <div><button class="px-3 py-1 rounded-lg border" onclick="event.stopPropagation(); showProject(${p.id})">Ver</button></div> 
+
+          </div> 
+
+
+
+        `;
+
+        el.onclick = () => showProject(p.id);
+
+        cont.appendChild(el);
+
+      });
+
+    }
+
+
+
+    function showProject(id) {
+
+      const p = projectById(id);
+
+      if (!p) return;
+
+      const entreg = (data.entregables.find(x => x.id === p.entregables[0]) || { items: [] }).items.join(', ');
+
+      const alumnos = data.estudiantes.filter(s => s.proyectoId === p.id).map(s => s.nombre);
+
+      const html = ` 
+
+        <div> 
+
+          <h3 class="text-2xl font-bold mb-1">${p.nombre}</h3> 
+
+          <p class="text-gray-600 mb-3">${p.metodologia}</p> 
+
+          <div class="grid grid-cols-2 gap-4"> 
+
+            <div><strong>Periodo</strong><div class="text-gray-700">${p.inicio} → ${p.fin}</div></div> 
+
+            <div><strong>Estado</strong><div class="text-gray-700">${p.estado}</div></div> 
+
+            <div><strong>Entregables</strong><div class="text-gray-700">${entreg || '—'}</div></div> 
+
+            <div><strong>Alumnos</strong><div class="text-gray-700">${alumnos.join(', ') || '—'}</div></div> 
+
+          </div> 
+
+          <div class="mt-4 flex gap-2"> 
+
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg" onclick="alert('Generar reporte (demo)')">Generar reporte</button> 
+
+            <button class="px-4 py-2 bg-gray-100 rounded-lg" onclick="closeModal()">Cerrar</button> 
+
+          </div> 
+
+        </div> 
+
+      `;
+
+      openModal(html);
+
+    }
+
+
+
+
+
+    function init() {
+
+      // secciones 
+
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+
+      document.getElementById('inicio').classList.remove('hidden');
+
+
+
+      populateFilters();
+
+      renderStatsAndHighlights();
+
+      renderStudents();
+
+      renderCompanies();
+
+      renderProjects();
+
+    }
+
+
+
+    // cerrar modal con ESC o backdrop 
+
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    document.getElementById('modal').addEventListener('click', (ev) => { if (ev.target.id === 'modal') closeModal(); });
+
+
+
+
+
+    // inicializar en carga 
+
+    window.addEventListener('DOMContentLoaded', init);
+
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'http://localhost:5678/webhook/62422aea-4894-41d6-bd0a-05976d6712f3/chat',
+      webhookConfig: {
+        method: 'POST',
+        headers: {}
+      },
+      target: '#n8n-chat',
+      mode: 'window',
+      chatInputKey: 'chatInput',
+      chatSessionKey: 'sessionId',
+      loadPreviousSession: true,
+      metadata: {},
+      showWelcomeScreen: false,
+      defaultLanguage: 'en',
+      initialMessages: [
+        'Bienvenido! 👋',
+        'como te puedo ayudar el dia de hoy?'
+      ],
+      i18n: {
+        en: {
+          title: 'leoncio  IA! 👋',
+          subtitle: "Estoy aqui para ayudarte 24/7.",
+          footer: '',
+          getStarted: 'Nueva conversación',
+          inputPlaceholder: 'Escribe tu pregunta',
+        },
+      },
+      enableStreaming: false,
+    });
+
+  </script>
+
+</body>
+
+</html>
